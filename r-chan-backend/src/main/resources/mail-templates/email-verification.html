@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Email - R-Chan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            text-align: center;
+            padding: 48px 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 16px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 48px 40px;
+        }
+
+        .greeting {
+            font-size: 20px;
+            margin-bottom: 32px;
+            color: #1e293b;
+        }
+
+        .greeting strong {
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+
+        .message {
+            font-size: 16px;
+            margin-bottom: 32px;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .code-container {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin: 32px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .code-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #64748b;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .verification-code {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: #1d4ed8;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 2px solid #dbeafe;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15);
+        }
+
+        .warning-box {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+            position: relative;
+        }
+
+        .warning-box::before {
+            content: '!';
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .warning-content {
+            margin-left: 48px;
+        }
+
+        .warning-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .warning-text {
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .security-tips {
+            background-color: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .security-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 16px;
+        }
+
+        .security-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .security-list li {
+            color: #374151;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .security-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #0ea5e9;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #1e293b;
+            color: #cbd5e0;
+            text-align: center;
+            padding: 32px 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            margin-top: 16px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .footer-links a {
+            margin: 0 8px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 24px 20px;
+            }
+
+            .header {
+                padding: 32px 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .verification-code {
+                font-size: 32px;
+                letter-spacing: 4px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <div class="logo">R-Chan</div>
+        <h1>Verificación de Email</h1>
+    </div>
+
+    <div class="content">
+        <div class="greeting">
+            ¡Hola <strong th:text="${username}">Usuario</strong>!
+        </div>
+
+        <div class="message">
+            <p>Gracias por registrarte en R-Chan. Para completar tu registro y activar tu cuenta, necesitamos verificar tu dirección de email.</p>
+
+            <p>Tu código de verificación es:</p>
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">Código de Verificación</div>
+            <div class="verification-code" th:text="${verificationCode}">123456</div>
+        </div>
+
+        <div class="warning-box">
+            <div class="warning-content">
+                <div class="warning-title">¡Importante!</div>
+                <div class="warning-text">
+                    Este código de verificación expirará en <strong th:text="${expiryMinutes}">15</strong> minutos.
+                    Ingresa este código en la página de verificación para completar tu registro.
+                </div>
+            </div>
+        </div>
+
+        <div class="message">
+            <p>Si no creaste una cuenta en R-Chan, puedes ignorar este email o contactar a nuestro soporte si tienes alguna preocupación.</p>
+        </div>
+
+        <div class="security-tips">
+            <div class="security-title">Consejos de Seguridad:</div>
+            <ul class="security-list">
+                <li>Nunca compartas este código con nadie</li>
+                <li>Nuestro equipo de soporte nunca te pedirá este código</li>
+                <li>Completa la verificación lo antes posible</li>
+                <li>Usa una conexión segura para verificar tu cuenta</li>
+            </ul>
+        </div>
+
+        <div class="message">
+            <p>¿Necesitas ayuda? Contacta a nuestro equipo de soporte en cualquier momento.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <p>Este es un mensaje automático. Por favor, no respondas a este email.</p>
+            <p style="margin-top: 8px;">
+                © <span th:text="${#dates.year(#dates.createNow())}">2025</span> R-Chan. Todos los derechos reservados.
+            </p>
+            <div class="footer-links">
+                <a href="https://r-chan.example.com/support">Soporte</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
