@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card {
+  @apply rounded-lg shadow-lg border;
+}
+
+.dark .card {
+  @apply bg-dark-bg-secondary border-dark-border-primary;
+}
+
+.light .card {
+  @apply bg-light-bg-secondary border-light-border-primary;
+}
+
+/* Clases de utilidad para texto */
+.text-text-primary {
+  @apply text-dark-text-primary;
+}
+
+.light .text-text-primary {
+  @apply text-light-text-primary;
+}
+
+.text-text-secondary {
+  @apply text-dark-text-secondary;
+}
+
+.light .text-text-secondary {
+  @apply text-light-text-secondary;
+}
+
+.text-text-accent {
+  @apply text-dark-text-accent;
+}
+
+.light .text-text-accent {
+  @apply text-light-text-accent;
+}
+
+/* Clases de utilidad para backgrounds */
+.bg-background-tertiary {
+  @apply bg-dark-bg-tertiary;
+}
+
+.light .bg-background-tertiary {
+  @apply bg-light-bg-tertiary;
+}
+
+.bg-background-primary {
+  @apply bg-dark-bg-primary;
+}
+
+.light .bg-background-primary {
+  @apply bg-light-bg-primary;
+}
+
+.bg-background-secondary {
+  @apply bg-dark-bg-secondary;
+}
+
+.light .bg-background-secondary {
+  @apply bg-light-bg-secondary;
+}
+
+/* Clases de utilidad para borders */
+.border-border-primary {
+  @apply border-dark-border-primary;
+}
+
+.light .border-border-primary {
+  @apply border-light-border-primary;
+}
+
+.input-theme {
+  @apply rounded focus:outline-none focus:ring-1;
+}
+
+.dark .input-theme {
+  @apply bg-dark-bg-tertiary border-dark-border-primary text-dark-text-primary
+         focus:border-dark-border-accent focus:ring-dark-border-accent/50;
+}
+
+.light .input-theme {
+  @apply bg-light-bg-tertiary border-light-border-primary text-light-text-primary
+         focus:border-light-border-accent focus:ring-light-border-accent/50;
+}
+
+@layer base {
+  body {
+    font-family: system-ui, sans-serif;
+    @apply antialiased;
+  }
+  
+  .dark body {
+    @apply bg-dark-bg-primary text-dark-text-primary;
+  }
+  
+  .light body {
+    @apply bg-light-bg-primary text-light-text-primary;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-dark-bg-secondary;
+  }
+  
+  .light ::-webkit-scrollbar-track {
+    @apply bg-light-bg-secondary;
+  }
+  
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-dark-border-primary;
+  }
+  
+  .light ::-webkit-scrollbar-thumb {
+    @apply bg-light-border-primary;
+  }
+  
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-border-accent;
+  }
+  
+  .light ::-webkit-scrollbar-thumb:hover {
+    @apply bg-light-border-accent;
+  }
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-dark-popup {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-radius: 12px !important;
+}
+
+.swal2-light-popup {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+}
+
+.swal2-dark-title {
+  color: #f1f5f9 !important;
+  font-weight: 600 !important;
+}
+
+.swal2-light-title {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+.swal2-dark-text {
+  color: #cbd5e1 !important;
+}
+
+.swal2-light-text {
+  color: #475569 !important;
+}
+
+.swal2-dark-confirm {
+  background: #3b82f6 !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-dark-confirm:hover {
+  background: #2563eb !important;
+}
+
+.swal2-light-confirm {
+  background: #2563eb !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-light-confirm:hover {
+  background: #1d4ed8 !important;
+}
+
+.swal2-dark-cancel {
+  background: #64748b !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-dark-cancel:hover {
+  background: #475569 !important;
+}
+
+.swal2-light-cancel {
+  background: #94a3b8 !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.swal2-light-cancel:hover {
+  background: #64748b !important;
+}
